@@ -27,7 +27,7 @@ func TestRegisterUserHandler(t *testing.T) {
 			email:              "test@example.com",
 			password:           "password",
 			expectedStatusCode: http.StatusOK,
-			expectedBody:       []byte(`<h1>Registration successful</h1><p>Go to <a href="login">login</a></p>`),
+			expectedBody:       []byte(`<h1>Compte créé avec succès</h1><p>Allez sur la <a href="login">page de connexion</a></p>`),
 		},
 		{
 			name:               "fail - error creating user",
@@ -35,7 +35,7 @@ func TestRegisterUserHandler(t *testing.T) {
 			password:           "password",
 			createUserError:    gorm.ErrDuplicatedKey,
 			expectedStatusCode: http.StatusBadRequest,
-			expectedBody:       []byte(`<h1>Registration failed</h1>`),
+			expectedBody:       []byte(`<div><h1>Échec de la création du compte</h1><p>Il y a eu une erreur lors de la création de votre compte</p></div>`),
 		},
 	}
 
