@@ -26,20 +26,20 @@ func Index(email string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div>Welcome ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"mt-10 text-4xl font-bold text-center\">Bienvenue sur mon site ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(email)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/Index.templ`, Line: 5, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/templates/Index.templ`, Line: 5, Col: 32}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h1><p class=\"mt-4 text-center\">Maintenant que vous êtes connecté, vous pouvez voir les autres pages de ce site.</p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -65,7 +65,7 @@ func GuestIndex() templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div>Welcome guest</div>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<h1 class=\"mt-10 text-4xl font-bold text-center\">Bienvenue sur mon site</h1><p class=\"mt-4 text-center\">Ceci est un site web en Go. Vous pouvez vous connecter avec un email et un mot de passe. Si vous n'avez pas de compte, vous pouvez en créer un. Pour cela, cliquez sur le bouton ci-dessous. </p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

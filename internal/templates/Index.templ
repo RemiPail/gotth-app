@@ -1,13 +1,19 @@
 package templates
 
 templ Index(email string) {
-	<div>
-		Welcome { email }
-	</div>
+	<h1 class="mt-10 text-4xl font-bold text-center">
+		Bienvenue sur mon site { email }
+	</h1>
+	<p class="mt-4 text-center">
+		Maintenant que vous êtes connecté, vous pouvez voir les autres pages de ce site.
+	</p>
 }
 
 templ GuestIndex() {
-	<div>
-		Welcome guest
-	</div>
+	<h1 class="mt-10 text-4xl font-bold text-center">
+		Bienvenue sur mon site
+	</h1>
+	<p class="mt-4 text-center">
+		Ceci est un site web en Go. Vous pouvez vous connecter avec un email et un mot de passe. Si vous n'avez pas de compte, vous pouvez en créer un. Pour cela, cliquez sur le bouton ci-dessous. 
+	</p>
 }
