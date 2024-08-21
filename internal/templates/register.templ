@@ -2,8 +2,8 @@ package templates
 
 templ RegisterPage() {
 	<div hx-ext="response-targets">
-		<h1>
-			Register an account
+		<h1 class="text-2xl font-bold mt-10">
+			Création de compte
 		</h1>
 		<form
 			hx-post="/register"
@@ -11,34 +11,42 @@ templ RegisterPage() {
 			hx-target-401="#register-error"
 		>
 			<div id="register-error"></div>
-			<div>
-				<label for="email">Your email</label>
-				<input type="email" name="email" id="email" placeholder="name@company.com" required=""/>
+			<div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+				<div class="sm:col-span-4">
+					<label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adresse mail</label>
+					<div class="mt-2">
+						<input id="email" name="email" type="email" autocomplete="email" placeholder="prenom.nom@company.com" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+					</div>
+				</div>
+				<div class="sm:col-span-4">
+					<label for="email" class="block text-sm font-medium leading-6 text-gray-900">Mot de passe</label>
+					<div class="mt-2">
+						<input id="password" name="password" type="password" placeholder="••••••••" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"/>
+					</div>
+				</div>
 			</div>
-			<div>
-				<label for="password">Password</label>
-				<input type="password" name="password" id="password" placeholder="••••••••" required=""/>
-			</div>
-			<button type="submit">
-				Register
+			<button
+				type="submit"
+				class="mt-10 inline-block rounded bg-primary-600 px-6 py-2 font-medium text-white duration-150 ease-in-out hover:bg-primary-500 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none"
+			>
+				Se créer un compte
 			</button>
-			<p>
-				Already have an account?
-				<a href="/login">Login</a>
+			<p class="mt-4">
+				Déjà un compte ?
+				<a href="/login" class="text-primary-600 font-medium underline">Se connecter</a>
 			</p>
 		</form>
 	</div>
 }
 
 templ RegisterSuccess() {
-	<h1>Registration successful</h1>
-	<p>Go to <a href="login">login</a></p>
+	<h1>Compte créé avec succès</h1>
+	<p>Allez sur la <a href="login">page de connexion</a></p>
 }
-
 
 templ RegisterError() {
 	<div>
-		<h1>Registration failed</h1>
-		<p>There was an error registering your account</p>
+		<h1>Échec de la création du compte</h1>
+		<p>Il y a eu une erreur lors de la création de votre compte</p>
 	</div>
 }

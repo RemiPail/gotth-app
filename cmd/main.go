@@ -56,6 +56,10 @@ func main() {
 	fileServer := http.FileServer(http.Dir("./static"))
 	r.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
+	r.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("User-agent: *\nAllow: /"))
+	})
+
 	authMiddleware := m.NewAuthMiddleware(sessionStore, cfg.SessionCookieName)
 
 	r.Group(func(r chi.Router) {

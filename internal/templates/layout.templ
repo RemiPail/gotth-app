@@ -1,15 +1,16 @@
 package templates
 
 import (
-	"os"
 	"goth/internal/middleware"
+	"os"
 )
 
 templ header(title string) {
 	<head>
 		<title>{ title }</title>
 		<meta charset="UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"/>
+		<meta name="description" content="Un site de démonstration pour la stack GOTTH (Go + Templ + Tailwind + HTMX)"/>
 		<script src="static/script/htmx.min.js" nonce={ middleware.GetHtmxNonce(ctx) }></script>
 		<script src="static/script/response-targets.js" nonce={ middleware.GetResponseTargetsNonce(ctx) }></script>
 		if os.Getenv("env") == "production" {
@@ -17,35 +18,47 @@ templ header(title string) {
 		} else {
 			<link rel="stylesheet" href="static/css/style.css" nonce={ middleware.GetTwNonce(ctx) }/>
 		}
+		<link rel="icon" type="image/png" href="static/favicon.png"/>
 	</head>
 }
 
 templ footer() {
-	<footer class="bg-primary-600 p-4"></footer>
+	<footer class="bg-primary-600 p-4">
+		<div class="container flex justify-between">
+			<div class="flex space-x-4 text-gray-100">
+				<span>
+					Fait avec ❤️ par
+					<a class="text-gray-100 underline" href="https://github.com/RemiPail">Rémi Pailharey</a>
+					avec la stack GOTTH de
+					<a class="text-gray-100 underline" href="https://github.com/TomDoesTech/GOTTH">TomDoesTech</a>
+				</span>
+			</div>
+		</div>
+	</footer>
 }
 
 templ nav() {
 	<nav class="bg-primary-600 p-4">
-		<div class="container flex justify-between">
+		<div class="container flex justify-between items-center gap-x-4 text-gray-100">
 			<ol class="flex space-x-4">
 				<li>
-					<a class="text-gray-200" href="/">Home</a>
-				</li>
-				<li>
-					<a class="text-gray-200" href="/about">About</a>
+					<a href="/" class="flex items-center">
+						<img src="/static/img/logo.webp" alt="" class="h-10 w-auto border border-gray-100 rounded-md"/>
+						<span class="ml-2 text-xl font-bold">GOTTH</span>
+					</a>
 				</li>
 			</ol>
 			<ol class="flex space-x-4">
 				if middleware.GetUser(ctx) != nil {
 					<li>
-						<button class="text-gray-200" hx-target="body" hx-swap="innerHTML" hx-post="/logout">Logout</button>
+						<button hx-target="body" hx-swap="innerHTML" hx-post="/logout">Se déconnecter</button>
 					</li>
 				} else {
 					<li>
-						<a class="text-gray-200" href="/register">Register</a>
+						<a href="/register">Créer un compte</a>
 					</li>
 					<li>
-						<a class="text-gray-200" href="/login">Login</a>
+						<a href="/login">Se connecter</a>
 					</li>
 				}
 			</ol>
@@ -54,12 +67,14 @@ templ nav() {
 }
 
 templ Layout(contents templ.Component, title string) {
-	@header(title)
-	<body class="flex flex-col h-full">
-		@nav()
-		<main class="flex-1 container ">
-			@contents
-		</main>
-		@footer()
-	</body>
+	<html lang="fr">
+		@header(title)
+		<body class="flex flex-col h-full">
+			@nav()
+			<main class="flex-1 container ">
+				@contents
+			</main>
+			@footer()
+		</body>
+	</html>
 }
