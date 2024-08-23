@@ -53,6 +53,12 @@ func main() {
 		},
 	)
 
+	todoStore := dbstore.NewTodoStore(
+		dbstore.NewTodoStoreParams{
+			DB: db,
+		},
+	)
+
 	fileServer := http.FileServer(http.Dir("./static"))
 	r.Handle("/static/*", http.StripPrefix("/static/", fileServer))
 
@@ -94,6 +100,11 @@ func main() {
 		r.Post("/logout", handlers.NewPostLogoutHandler(handlers.PostLogoutHandlerParams{
 			SessionCookieName: cfg.SessionCookieName,
 		}).ServeHTTP)
+
+		r.Get("/todos", handlers.NewTodosHandler(handlers.TodosHandlerParams{TodoStore: todoStore}).ServeHTTP)
+		r.Post("/todos", handlers.NewPostTodosHandler(handlers.TodosHandlerParams{TodoStore: todoStore}).ServeHTTP)
+		r.Delete("/todos/{id}", handlers.NewDeleteTodosHandler(handlers.TodosHandlerParams{TodoStore: todoStore}).ServeHTTP)
+		// r.Put("/todos/{id}", handlers.NewPutTodosHandler(handlers.TodosHandlerParams{TodoStore: todoStore}).ServeHTTP)
 	})
 
 	killSig := make(chan os.Signal, 1)

@@ -1,0 +1,35 @@
+package templates
+
+import (
+	"fmt"
+	"goth/internal/store"
+)
+
+templ Todos(todos []store.Todo) {
+	<div hx-ext="response-targets">
+		<h1 class="text-2xl font-bold mt-10">
+			Todos
+		</h1>
+		<form hx-post="/todos" hx-target="#todos-list" hx-swap="beforeend" class="mt-10 flex flex-col gap-2 sm:flex-row max-w-lg">
+			<input type="text" name="title" placeholder="Titre du todo" class="flex-4 p-2 border-2 border-gray-300 rounded-md sm:w-full"/>
+			<button type="submit" class="flex-1 rounded bg-primary-600 px-6 py-2 font-medium text-white duration-150 ease-in-out hover:bg-primary-500 focus:bg-primary-accent-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none  sm:w-full">Ajouter</button>
+		</form>
+		if len(todos) == 0 {
+			<p>Aucun todo</p>
+		} else {
+			<ul id="todos-list" class="flex flex-col gap-2">
+				for _, todo := range todos {
+					<li id={ fmt.Sprintf("todo-%d", todo.ID) } class="flex items-center justify-between max-w-lg">
+						<div class="flex gap-2 items-center">
+							<input type="checkbox" checked?={ todo.Completed } hx-put={ fmt.Sprintf("/todos/%d", todo.ID) } class=""/>
+							<span class="font-bold">{ todo.Title }</span>
+						</div>
+						<button hx-delete={ fmt.Sprintf("/todos/%d", todo.ID) } hx-target={ fmt.Sprintf("#todo-%d", todo.ID) } hx-swap="outerHTML" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+							Supprimer
+						</button>
+					</li>
+				}
+			</ul>
+		}
+	</div>
+}

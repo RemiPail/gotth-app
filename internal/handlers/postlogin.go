@@ -81,6 +81,6 @@ func (h *PostLoginHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, &cookie)
 
-	w.Header().Set("HX-Redirect", "/")
+	w.Header().Set("HX-Redirect", "/todos")
 	w.WriteHeader(http.StatusOK)
 }
